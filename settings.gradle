@@ -1,0 +1,2 @@
+rootProject.name='DM114_Project'
+include ':app'
