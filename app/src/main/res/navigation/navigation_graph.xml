@@ -4,11 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/fragmentStatusList">
+    app:startDestination="@id/OrderStatusBinding">
+
+    <action
+        android:id="@+id/action_showProductInfo"
+        app:destination="@id/OrderStatusBinding" >
+        <argument
+            app:nullable="true"
+            android:name="orderInfo"
+            app:argType="string"/>
+    </action>
 
     <fragment
-        android:id="@+id/fragmentStatusList"
-        android:name="br.com.carvalho.dm114_project.ordersList.StatusFragment"
+        android:id="@+id/OrderStatusBinding"
+        android:name="br.com.carvalho.dm114_project.orders.OrderStatusFragment"
         android:label="fragment_products_list"
         tools:layout="@layout/order_status" >
     </fragment>
