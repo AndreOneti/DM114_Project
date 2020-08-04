@@ -15,6 +15,9 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import br.com.carvalho.dm114_project.orders.OrderStatusFragmentDirections
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 
 private const val ORDER_DETAIL = "orderDetail"
 private const val TAG = "MainActivity"
@@ -68,6 +71,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 true
             }
+            R.id.nav_order_list -> {
+                this.findNavController(R.id.nav_host_fragment)
+                    .navigate(OrderStatusFragmentDirections.actionShowOrderList())
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -83,5 +91,29 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, orderInfo)
         this.findNavController(R.id.nav_host_fragment)
             .navigate(OrderStatusFragmentDirections.actionShowProductInfo(orderInfo))
+    }
+
+    fun setFirebaseRemoteConfig() {
+        val remoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 60 // Ideal que sejam horas
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+
+        val defaultConfigMap: MutableMap<String, Any> = HashMap()
+        defaultConfigMap["delete_detail_view"] = true
+        defaultConfigMap["delete_list_view"] = false
+
+        remoteConfig.setDefaultsAsync(defaultConfigMap)
+
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val updated = task.result
+                    Log.d("MainActivity", "Remote config updated: $updated")
+                } else {
+                    Log.d("MainActivity", "Failed to load remote config")
+                }
+            }
     }
 }

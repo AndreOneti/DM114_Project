@@ -8,7 +8,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
-import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
 import java.time.LocalDateTime.now
 import java.time.format.DateTimeFormatter
@@ -23,7 +22,7 @@ private const val FIELD_STATUS = "status"
 private const val FIELD_PRODUCT_CODE = "productCode"
 private const val FIELD_ORDER_ID = "orderId"
 private const val FIELD_USER_ID = "userId"
-private const val FIELD_DATE = "date"
+private const val FIELD_DATE = "data"
 private const val FIELD_ID = "id"
 
 private const val FORMAT_PATTER = "yyyy-MM-dd HH:mm"
@@ -51,6 +50,7 @@ object OrderRepository {
         val stringDate = currentDate.format(DateTimeFormatter.ofPattern(FORMAT_PATTER))
 
         order.data = stringDate
+
         order.id = document.id
 
         document.set(order)
@@ -58,8 +58,8 @@ object OrderRepository {
         return document.id
     }
 
-    fun deleteOrder(orderId: String) {
-        val document = firebaseFirestore.collection(COLLECTION).document(orderId)
+    fun deleteOrder(documetId: String) {
+        val document = firebaseFirestore.collection(COLLECTION).document(documetId)
         document.delete()
     }
 
@@ -68,7 +68,7 @@ object OrderRepository {
 
         firebaseFirestore.collection(COLLECTION)
             .whereEqualTo(FIELD_USER_ID, firebaseAuth.currentUser!!.uid)
-            .orderBy(FIELD_DATE, Query.Direction.ASCENDING)
+            .orderBy(FIELD_DATE, Query.Direction.DESCENDING)
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException != null) {
                     Log.w(TAG, "Listen failed.", firebaseFirestoreException)
