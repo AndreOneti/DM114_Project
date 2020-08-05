@@ -7,10 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import br.com.carvalho.dm114_project.R
 import br.com.carvalho.dm114_project.databinding.OrderListStatusBinding
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
-import com.google.firebase.analytics.FirebaseAnalytics
 
 private const val TAG = "OrderStatusFragment"
 private const val ORDER_DETAIL = "orderDetail"
@@ -39,8 +37,9 @@ class OrderListStatusFragment : Fragment()  {
 
         binding.rcvOrders.adapter = OrderAdapter(OrderAdapter.OrderClickListener{
             Log.i(TAG,"Product selected: ${it.id}")
-//            this.findNavController()
-//                .navigate(OrderStatusFragmentDirections.actionShowOrderList())
+            this.findNavController()
+                .navigate(OrderListStatusFragmentDirections
+                    .actionShowProducOrderDetail(it.id!!, it.productCode!!))
         })
 
         return binding.root

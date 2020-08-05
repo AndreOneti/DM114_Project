@@ -30,6 +30,22 @@
         android:name="br.com.carvalho.dm114_project.orders.OrderListStatusFragment"
         android:label="fragment_order_list"
         tools:layout="@layout/order_list_status" >
+        <action
+            android:id="@+id/action_showProducOrderDetail"
+            app:destination="@id/OrderProductStatus" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/OrderProductStatus"
+        android:name="br.com.carvalho.dm114_project.orders.OrderProductStatusFragment"
+        android:label="fragment_order_product_details"
+        tools:layout="@layout/order_product_detail" >
+        <argument
+            android:name="orderId"
+            app:argType="string"/>
+        <argument
+            android:name="productCode"
+            app:argType="string"/>
     </fragment>
 
 </navigation>

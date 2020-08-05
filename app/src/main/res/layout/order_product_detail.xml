@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="orderInfoViewModel"
+            type="br.com.carvalho.dm114_project.orders.OrderProductViewModel" />
+        <variable
+            name="productInfoViewModel"
+            type="br.com.carvalho.dm114_project.product.ProductInfoViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".MainActivity">
+
+            <TextView
+                android:id="@+id/textOrderId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="OrderId:"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtOrderId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:orderId="@{orderInfoViewModel.order.orderId}"
+                app:layout_constraintEnd_toEndOf="@+id/textOrderId"
+                app:layout_constraintStart_toStartOf="@+id/textOrderId"
+                app:layout_constraintTop_toBottomOf="@+id/textOrderId" />
+
+            <TextView
+                android:id="@+id/textStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Status:"
+                app:layout_constraintEnd_toEndOf="@+id/txtOrderId"
+                app:layout_constraintStart_toStartOf="@+id/txtOrderId"
+                app:layout_constraintTop_toBottomOf="@+id/txtOrderId" />
+
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{orderInfoViewModel.order.status}"
+                app:layout_constraintEnd_toEndOf="@+id/textStatus"
+                app:layout_constraintStart_toStartOf="@+id/textStatus"
+                app:layout_constraintTop_toBottomOf="@+id/textStatus" />
+
+            <TextView
+                android:id="@+id/textDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Date:"
+                app:layout_constraintEnd_toEndOf="@+id/txtStatus"
+                app:layout_constraintStart_toStartOf="@+id/txtStatus"
+                app:layout_constraintTop_toBottomOf="@+id/txtStatus" />
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{orderInfoViewModel.order.data}"
+                app:layout_constraintEnd_toEndOf="@+id/textDate"
+                app:layout_constraintStart_toStartOf="@+id/textDate"
+                app:layout_constraintTop_toBottomOf="@+id/textDate" />
+
+            <TextView
+                android:id="@+id/textProductLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Product"
+                app:layout_constraintEnd_toEndOf="@+id/txtDate"
+                app:layout_constraintStart_toStartOf="@+id/txtDate"
+                app:layout_constraintTop_toBottomOf="@+id/txtDate" />
+
+            <TextView
+                android:id="@+id/textName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Name:"
+                app:layout_constraintEnd_toEndOf="@+id/txtDate"
+                app:layout_constraintStart_toStartOf="@+id/txtDate"
+                app:layout_constraintTop_toBottomOf="@+id/textProductLabel" />
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{productInfoViewModel.product.name}"
+                app:layout_constraintEnd_toEndOf="@+id/txtDate"
+                app:layout_constraintStart_toStartOf="@+id/txtDate"
+                app:layout_constraintTop_toBottomOf="@+id/textName" />
+
+            <TextView
+                android:id="@+id/textCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Code:"
+                app:layout_constraintEnd_toEndOf="@+id/txtName"
+                app:layout_constraintStart_toStartOf="@+id/txtName"
+                app:layout_constraintTop_toBottomOf="@+id/txtName" />
+
+            <TextView
+                android:id="@+id/txtCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{productInfoViewModel.product.code}"
+                app:layout_constraintEnd_toEndOf="@+id/textCode"
+                app:layout_constraintStart_toStartOf="@+id/textCode"
+                app:layout_constraintTop_toBottomOf="@+id/textCode" />
+
+            <TextView
+                android:id="@+id/textPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Price:"
+                app:layout_constraintEnd_toEndOf="@+id/txtCode"
+                app:layout_constraintStart_toStartOf="@+id/txtCode"
+                app:layout_constraintTop_toBottomOf="@+id/txtCode" />
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:productPrice="@{productInfoViewModel.product.price}"
+                app:layout_constraintEnd_toEndOf="@+id/textPrice"
+                app:layout_constraintStart_toStartOf="@+id/textPrice"
+                app:layout_constraintTop_toBottomOf="@+id/textPrice" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
