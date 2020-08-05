@@ -22,4 +22,8 @@ class OrderProductViewModel(private val orderId: String): ViewModel(){
     private fun getOrder(orderId:String) {
         order = OrderRepository.getOrderById(orderId)
     }
+
+    fun deleteOrder() {
+        OrderRepository.deleteOrder(orderId)
+    }
 }

@@ -40,13 +40,13 @@ class OrderStatusFragment : Fragment() {
         binding.orderInfoViewModel = orderInfoViewModel
 
         if (this.arguments != null) {
-            if (this.arguments!!.containsKey("orderInfo")) {
+            if (this.requireArguments().containsKey("orderInfo")) {
                 val moshi = Moshi.Builder()
                     .build()
                 val jsonAdapter: JsonAdapter<Order> =
                     moshi.adapter<Order>(Order::class.java)
 
-                jsonAdapter.fromJson(this.arguments!!.getString("orderInfo")!!).let {
+                jsonAdapter.fromJson(this.requireArguments().getString("orderInfo")!!).let {
                     orderInfoViewModel.order.value = it
                 }
             }

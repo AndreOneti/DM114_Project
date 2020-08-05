@@ -5,10 +5,13 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import br.com.carvalho.dm114_project.R
 import br.com.carvalho.dm114_project.databinding.OrderProductDetailBinding
 import br.com.carvalho.dm114_project.product.ProductInfoViewModel
 import br.com.carvalho.dm114_project.product.ProductInfoViewModelFactory
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 
 private const val TAG = "OrderProductStatusFrag"
 
@@ -32,19 +35,37 @@ class OrderProductStatusFragment: Fragment() {
         val orderProductViewModelFactory = OrderProductViewModelFactory(orderId!!)
         binding.orderInfoViewModel = ViewModelProviders.of(
             this, orderProductViewModelFactory).get(OrderProductViewModel::class.java)
-        
+
         val productViewModelFactory = ProductInfoViewModelFactory(productCode!!)
         binding.productInfoViewModel= ViewModelProviders.of(
             this, productViewModelFactory).get(ProductInfoViewModel::class.java)
 
         binding.setLifecycleOwner(this)
 
+//        if(productCode != null){
+//            val remoteConfig = Firebase.remoteConfig
+//            setHasOptionsMenu(remoteConfig.getBoolean("delete_detail_view"))
+//        }else{
         setHasOptionsMenu(true)
+//        }
 
         return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.order_delete_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.nav_delete_order -> {
+                Log.d(TAG, "Deleting the order")
+                binding.orderInfoViewModel?.deleteOrder()
+                Log.d(TAG, "Pop in navigation")
+                findNavController().popBackStack()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

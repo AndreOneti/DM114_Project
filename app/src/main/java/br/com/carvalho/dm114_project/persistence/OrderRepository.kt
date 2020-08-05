@@ -26,6 +26,7 @@ private const val FIELD_DATE = "data"
 private const val FIELD_ID = "id"
 
 private const val FORMAT_PATTER = "yyyy-MM-dd HH:mm"
+private const val FORMAT_PATTER_FILTER = "yyyy-MM-dd HH:mm:ss"
 
 object OrderRepository {
 
@@ -47,7 +48,7 @@ object OrderRepository {
         }
 
         val currentDate = now()
-        val stringDate = currentDate.format(DateTimeFormatter.ofPattern(FORMAT_PATTER))
+        val stringDate = currentDate.format(DateTimeFormatter.ofPattern(FORMAT_PATTER_FILTER))
 
         order.data = stringDate
 

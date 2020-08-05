@@ -61,7 +61,7 @@
             android:paddingTop="12dip"
             android:paddingEnd="8dip"
             android:paddingBottom="12dip"
-            android:text="@{order.data}"
+            app:date="@{order.data}"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="normal"

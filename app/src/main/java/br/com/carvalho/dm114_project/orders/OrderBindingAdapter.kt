@@ -18,3 +18,10 @@ fun bindOrdersList(recyclerView: RecyclerView, orders: List<Order>?) {
     val adapter = recyclerView.adapter as OrderAdapter
     adapter.submitList(orders)
 }
+
+@BindingAdapter("date")
+fun bindOrderID(txtDate: TextView, date: String?) {
+    date?.let {
+        txtDate.text = date.substring(0, 16)
+    }
+}
