@@ -15,6 +15,7 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import br.com.carvalho.dm114_project.orders.OrderStatusFragmentDirections
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             setContentView(R.layout.activity_main)
+            setFirebaseRemoteConfig()
 
             if (this.intent.hasExtra(ORDER_DETAIL)) {
                 showOrderInfo(intent.getStringExtra(ORDER_DETAIL)!!)
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 setContentView(R.layout.activity_main)
+                setFirebaseRemoteConfig()
             } else {
                 Toast.makeText(this, "Sign in failed", Toast.LENGTH_SHORT).show()
             }
@@ -72,6 +75,10 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.nav_order_list -> {
+
+                val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+                firebaseAnalytics.logEvent("order_list", null)
+
                 this.findNavController(R.id.nav_host_fragment)
                     .navigate(OrderStatusFragmentDirections.actionShowOrderList())
                 true
@@ -101,8 +108,7 @@ class MainActivity : AppCompatActivity() {
         remoteConfig.setConfigSettingsAsync(configSettings)
 
         val defaultConfigMap: MutableMap<String, Any> = HashMap()
-        defaultConfigMap["delete_detail_view"] = true
-        defaultConfigMap["delete_list_view"] = false
+        defaultConfigMap["delete_detail_view"] = false
 
         remoteConfig.setDefaultsAsync(defaultConfigMap)
 

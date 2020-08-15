@@ -1,6 +1,7 @@
 package br.com.carvalho.dm114_project.orders
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -24,8 +25,10 @@ class OrderAdapter (val onProductClickListener: OrderClickListener) :
     }
 
     override fun onBindViewHolder(holder: OrderAdapter.OrderViewHolder, position: Int) {
+
         val order = getItem(position)
         holder.bind(order)
+
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, order.id)
@@ -38,6 +41,7 @@ class OrderAdapter (val onProductClickListener: OrderClickListener) :
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, order.id)
             firebaseAnalytics.logEvent("attempt_delete_product", bundle)
+
             true
         }
     }

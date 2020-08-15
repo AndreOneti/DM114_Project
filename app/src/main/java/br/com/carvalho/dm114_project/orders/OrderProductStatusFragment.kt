@@ -10,6 +10,7 @@ import br.com.carvalho.dm114_project.R
 import br.com.carvalho.dm114_project.databinding.OrderProductDetailBinding
 import br.com.carvalho.dm114_project.product.ProductInfoViewModel
 import br.com.carvalho.dm114_project.product.ProductInfoViewModelFactory
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 
@@ -42,12 +43,8 @@ class OrderProductStatusFragment: Fragment() {
 
         binding.setLifecycleOwner(this)
 
-//        if(productCode != null){
-//            val remoteConfig = Firebase.remoteConfig
-//            setHasOptionsMenu(remoteConfig.getBoolean("delete_detail_view"))
-//        }else{
-        setHasOptionsMenu(true)
-//        }
+        val remoteConfig = Firebase.remoteConfig
+        setHasOptionsMenu(remoteConfig.getBoolean("delete_detail_view"))
 
         return binding.root
     }
@@ -60,6 +57,13 @@ class OrderProductStatusFragment: Fragment() {
         return when (item.itemId) {
             R.id.nav_delete_order -> {
                 Log.d(TAG, "Deleting the order")
+
+                val bundle = Bundle()
+                val firebaseAnalytics = FirebaseAnalytics.getInstance(this.requireContext())
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
+                    binding.orderInfoViewModel!!.order.value!!.id)
+                firebaseAnalytics.logEvent("delete_product", bundle)
+
                 binding.orderInfoViewModel?.deleteOrder()
                 Log.d(TAG, "Pop in navigation")
                 findNavController().popBackStack()

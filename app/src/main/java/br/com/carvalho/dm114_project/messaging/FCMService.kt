@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import java.util.*
@@ -16,6 +17,7 @@ import br.com.carvalho.dm114_project.orders.OrderInfoViewModel
 import br.com.carvalho.dm114_project.orders.OrderStatusFragment
 import br.com.carvalho.dm114_project.persistence.Order
 import br.com.carvalho.dm114_project.persistence.OrderRepository
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -49,7 +51,13 @@ class FCMService : FirebaseMessagingService() {
                         moshi.adapter<Order>(Order::class.java)
 
                     jsonAdapter.fromJson(remoteMessage.data.get(ORDER_DETAIL)!!).let {
-                        OrderRepository.saveOrder(it!!)
+                        var documentId = OrderRepository.saveOrder(it!!)
+
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, documentId)
+                        val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+                        firebaseAnalytics.logEvent("new_item_add", bundle)
+
                     }
                 }
             }
